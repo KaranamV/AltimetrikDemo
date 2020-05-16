@@ -1,0 +1,29 @@
+package com.altimetrik.covid.tracking.CovidStatistics;
+
+import org.json.JSONException;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.altimetrik.covid.tracking.CovidStatistics.Controller.CovidController;
+
+@SpringBootTest
+class CovidStatisticsApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+	
+	@Autowired
+	CovidController covidController;
+	
+	
+	@Test
+	void testGetByState() throws JSONException {
+		
+		covidController.findCovidDetailsByState("GA");
+	
+}
+
+}

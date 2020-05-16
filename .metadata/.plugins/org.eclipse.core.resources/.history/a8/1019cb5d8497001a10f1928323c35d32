@@ -1,0 +1,5 @@
+package com.altimetrik.covid.tracking.CovidStatistics.Controller;
+
+public class Controller {
+
+}

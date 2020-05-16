@@ -1,0 +1,5 @@
+package com.altimetrik.covid.tracking.CovidStatistics.Configuration;
+
+public class Config {
+
+}

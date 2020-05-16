@@ -1,0 +1,35 @@
+package com.altimetrik.covid.tracking.CovidStatistics.Service;
+
+import java.util.List;
+import org.springframework.stereotype.Service;
+
+import com.altimetrik.covid.tracking.CovidStatistics.Model.CovidMetrics;
+
+@Service
+public class Service {
+
+	public List<CovidMetrics> findCovidDetailsForState(String stateCode) {
+		
+		 RestTemplate restTemplate = new RestTemplate();
+	        ObjectMapper mapper = new ObjectMapper();
+	        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+	        ResponseEntity<List<Object>> rateResponse =
+	                restTemplate.exchange("http://api.worldbank.org/v2/country?format=json",
+	                        HttpMethod.GET, null, new ParameterizedTypeReference<List<Object>>() {
+	                        });
+	        
+	        List<Country> countries = (List<Country>) rateResponse.getBody().get(1);
+	        List<Country> countryList = mapper.convertValue(countries, new TypeReference<List<Country>>() {
+	        });
+
+	        Optional<Country> found = countryList.stream().filter(country -> country.getIso2Code().equals(iso2Code)).findFirst();
+	        //System.out.println("Country = " + found);
+	        if (found.isPresent()) {
+	            return found.get();
+	        }
+		
+		return null;
+	}
+
+}

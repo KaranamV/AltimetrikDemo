@@ -1,0 +1,5 @@
+package com.altimetrik.covid.tracking.CovidStatistics.Model;
+
+public class CovidMetrics {
+
+}

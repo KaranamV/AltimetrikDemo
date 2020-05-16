@@ -1,0 +1,5 @@
+package com.altimetrik.covid.tracking.CovidStatistics.Service;
+
+public class Service {
+
+}

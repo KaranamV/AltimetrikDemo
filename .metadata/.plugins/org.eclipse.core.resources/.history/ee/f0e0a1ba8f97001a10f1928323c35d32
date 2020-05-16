@@ -1,0 +1,36 @@
+package com.altimetrik.covid.tracking.CovidStatistics.Service;
+
+import java.util.List;
+
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.altimetrik.covid.tracking.CovidStatistics.Model.CovidMetrics;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+@Service
+public class CovidService {
+
+	public List<CovidMetrics> findCovidDetailsForState(String stateCode) {
+		
+		 RestTemplate restTemplate = new RestTemplate();
+	        ObjectMapper mapper = new ObjectMapper();
+	        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+
+	        ResponseEntity<List<Object>> rateResponse =
+	                restTemplate.exchange("https://covidtracking.com/api/v1/states/" + stateCode + "/current.json",
+	                        HttpMethod.GET, null, new ParameterizedTypeReference<List<Object>>() {
+	                        });
+	        
+	        System.out.println(rateResponse);
+	      //  List<CovidMetrics> metrics = (List<CovidMetrics>) rateResponse.getBody().get(1);
+	       
+	        return null;
+	}
+
+}

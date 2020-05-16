@@ -1,0 +1,40 @@
+package com.altimetrik.covid.tracking.CovidStatistics.Controller;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import com.altimetrik.covid.tracking.CovidStatistics.Model.CovidMetrics;
+import com.altimetrik.covid.tracking.CovidStatistics.Service.CovidService;
+
+@RestController
+public class CovidController {
+
+	@Autowired
+	private CovidService service;
+
+	@GetMapping(value = "/states/{stateCode}", produces = "application/json")
+	public List<CovidMetrics> findSimilarCountries(@PathVariable String stateCode) {
+		return service.findCovidDetailsForState(stateCode);
+	}
+
+	/*
+	 * @GetMapping(value = "/api/getcountry/{iso2Code}", produces =
+	 * "application/json") public CovidMetrics getCountry(@PathVariable String
+	 * iso2Code) { return exploreCountryService.getCountry(iso2Code); }
+	 */
+	
+}

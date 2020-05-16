@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?><testrun name="CovidStatisticsApplicationTests.testGetByState" project="CovidStatistics" tests="1" started="1" failures="0" errors="0" ignored="0">
+  <testsuite name="com.altimetrik.covid.tracking.CovidStatistics.CovidStatisticsApplicationTests" time="0.94" displayname="CovidStatisticsApplicationTests" uniqueid="[engine:junit-jupiter]/[class:com.altimetrik.covid.tracking.CovidStatistics.CovidStatisticsApplicationTests]">
+    <testcase name="testGetByState" classname="com.altimetrik.covid.tracking.CovidStatistics.CovidStatisticsApplicationTests" time="0.941" displayname="testGetByState()" uniqueid="[engine:junit-jupiter]/[class:com.altimetrik.covid.tracking.CovidStatistics.CovidStatisticsApplicationTests]/[method:testGetByState()]"/>
+  </testsuite>
+</testrun>

@@ -1,0 +1,48 @@
+package com.altimetrik.covid.tracking.CovidStatistics;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import org.json.JSONException;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+
+import com.altimetrik.covid.tracking.CovidStatistics.Controller.CovidController;
+import com.altimetrik.covid.tracking.CovidStatistics.Model.CovidMetrics;
+
+@SpringBootTest
+class CovidStatisticsApplicationTests {
+
+
+	
+	@Autowired
+	CovidController covidController;
+	
+	
+	@Test
+	void testGetByState() throws JSONException {
+		
+		CovidMetrics expected = new CovidMetrics();
+		
+		expected.setDeaths(1550);
+		
+		CovidMetrics actual = covidController.findCovidDetailsByState("GA");
+		
+		assertEquals(expected.getDeaths(), actual.getDeaths());
+	
+}
+	
+	@Test
+	void testGetByCountry() throws JSONException {
+		
+		CovidMetrics expected = new CovidMetrics();
+		
+		expected.setDeaths(81729);
+		
+		CovidMetrics actual = covidController.findCovidDetailsByCountry("us");
+		
+		assertEquals(expected.getDeaths(), actual.getDeaths());
+	
+}
+
+}

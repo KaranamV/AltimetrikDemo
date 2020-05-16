@@ -1,0 +1,56 @@
+package com.altimetrik.covid.tracking.CovidStatistics.Service;
+
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
+import org.json.JSONObject;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
+import com.altimetrik.covid.tracking.CovidStatistics.Model.CovidMetrics;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+@Service
+public class CovidService {
+
+	public CovidMetrics findCovidDetailsForState(String stateCode) {
+		
+		 RestTemplate restTemplate = new RestTemplate();
+		
+		  ObjectMapper mapper = new ObjectMapper();
+		  mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+		 
+
+	        ResponseEntity<List<Object>> rateResponse =
+	                restTemplate.exchange("https://covidtracking.com/api/v1/states/" + stateCode + "/current.json",
+	                        HttpMethod.GET, null, new ParameterizedTypeReference<List<Object>>() {
+	                        });
+	      //  List<CovidMetrics> metricList = new ArrayList<>();
+	      //  System.out.println(rateResponse);
+	        
+	      //  rateResponse.getBody().entrySet()
+	        
+	        List<CovidMetrics> metrics = (List<CovidMetrics>) rateResponse.getBody().get(1);
+	        List<CovidMetrics> metricsList = mapper.convertValue(metrics, new TypeReference<List<CovidMetrics>>() {
+	        });
+	        
+	        CovidMetrics cd = new CovidMetrics();
+	        
+	       for(CovidMetrics  metric: metricsList)
+	       {
+	    	   cd.setPositive(metric.getPositive());
+	    	   cd.setNegative(metric.getNegative());
+	    	   cd.setDeaths(metric.getDeaths());
+	       }
+
+	}
+
+}

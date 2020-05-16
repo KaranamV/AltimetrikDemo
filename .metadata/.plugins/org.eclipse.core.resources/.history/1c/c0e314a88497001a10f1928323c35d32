@@ -1,0 +1,89 @@
+package com.altimetrik.covid.tracking.CovidStatistics.Controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
+
+import com.altimetrik.covid.tracking.CovidStatistics.Model.CovidMetrics;
+
+@RestController
+public class Controller {
+
+	@Autowired
+	RestTemplate restTemplate;
+
+	@Autowired
+	CovidMetrics covidMetrics;
+
+	@Value("${service.x}")
+	String serviceURL;
+
+	/*
+	@PostMapping(value = "/test/{company_name}", produces = { MediaType.APPLICATION_JSON_VALUE })
+	public String getMessage(@PathVariable String company_name) throws JSONException {
+		String serviceurl = serviceURL + "/" + company_name + "?format=JSON";
+		String val = null;
+		ResponseEntity<String> response = null;
+		List<Manufacturer> mfglist = new ArrayList<Manufacturer>();
+		System.out.println(company_name);
+		response = restTemplate.getForEntity(serviceurl, String.class);
+
+		System.out.println("Mayusha");
+		val = response.getBody().toString();
+		JSONObject jsonObj = new JSONObject(val);
+		JSONArray res = jsonObj.getJSONArray("Results");
+		if (res.length() < 1) {
+			System.out.println("404 bad request");
+
+			return "Nodata";
+		} else {
+			for (int i = 0; i < res.length(); i++) {
+				Manufacturer manufacturer1 = new Manufacturer();
+				manufacturer1.setmID(res.getJSONObject(i).getString("Mfr_ID"));
+				manufacturer1.setmName(res.getJSONObject(i).getString("Mfr_Name"));
+				manufacturer1.setMcountry(res.getJSONObject(i).getString("Country"));
+				manufacturer1.setmCity(res.getJSONObject(i).getString("City"));
+				manufacturer1.setmState(res.getJSONObject(i).getString("StateProvince"));
+				mfglist.add(manufacturer1);
+			}
+			System.out.println(mfglist);
+
+		}
+		return "getdata";
+	}
+*/
+	@RequestMapping(value = "/test/{company_name}", method = RequestMethod.GET, produces = {
+			MediaType.APPLICATION_JSON_VALUE })
+	public List<Manufacturer> getMsg(@PathVariable String company_name) throws JSONException {
+		String serviceurl = serviceURL + "/" + company_name + "?format=JSON";
+		String val = null;
+		ResponseEntity<String> response = null;
+		List<Manufacturer> mfglist = new ArrayList<Manufacturer>();
+
+		response = restTemplate.getForEntity(serviceurl, String.class);
+
+		val = response.getBody().toString();
+		JSONObject jsonObj = new JSONObject(val);
+		JSONArray res = jsonObj.getJSONArray("Results");
+		if (res.length() < 1) {
+			System.out.println("404 bad request");
+
+			return mfglist;
+		} else {
+			for (int i = 0; i < res.length(); i++) {
+				Manufacturer manufacturer1 = new Manufacturer();
+				manufacturer1.setmID(res.getJSONObject(i).getString("Mfr_ID"));
+				manufacturer1.setmName(res.getJSONObject(i).getString("Mfr_Name"));
+				manufacturer1.setMcountry(res.getJSONObject(i).getString("Country"));
+				manufacturer1.setmCity(res.getJSONObject(i).getString("City"));
+				manufacturer1.setmState(res.getJSONObject(i).getString("StateProvince"));
+				mfglist.add(manufacturer1);
+			}
+			System.out.println(mfglist);
+
+		}
+		return mfglist;
+	}
+
+}

@@ -1,0 +1,2 @@
+service.url.us=https://covidtracking.com/api/v1/us/current.json
+service.url.states=https://covidtracking.com/api/v1/states/
